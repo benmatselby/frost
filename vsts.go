@@ -1,0 +1,113 @@
+package main
+
+import (
+	"fmt"
+	"os"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+	"sync"
+	"text/tabwriter"
+	"time"
+
+	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/urfave/cli"
+)
+
+func vstsListBuildOverview(c *cli.Context) {
+	filterBranch := c.String("branch")
+	path := c.String("path")
+
+	client := vsts.NewClient(vstsAccount, vstsProject, vstsToken)
+	client.UserAgent = "frost/go-vsts"
+
+	buildDefOpts := vsts.BuildDefinitionsListOptions{Path: "\\" + path}
+	definitions, err := client.BuildDefinitions.List(&buildDefOpts)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "unable to get a list of build definitions: %v", err)
+		os.Exit(2)
+	}
+
+	results := make(chan vsts.Build)
+	var wg sync.WaitGroup
+	wg.Add(len(definitions))
+
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	for _, definition := range definitions {
+		go func(definition vsts.BuildDefinition) {
+			defer wg.Done()
+
+			for _, branchName := range strings.Split(filterBranch, ",") {
+				builds, err := getBuildsForBranch(client, definition.ID, branchName)
+				if err != nil {
+					fmt.Printf("unable to get builds for definition %s: %v", definition.Name, err)
+				}
+				if len(builds) > 0 {
+					results <- builds[0]
+				}
+			}
+		}(definition)
+	}
+
+	var builds []vsts.Build
+	for result := range results {
+		builds = append(builds, result)
+	}
+
+	sort.Slice(builds, func(i, j int) bool { return builds[i].Definition.Name < builds[j].Definition.Name })
+
+	renderVstsBuilds(builds, len(builds), ".*")
+}
+
+func getBuildsForBranch(client *vsts.Client, defID int, branchName string) ([]vsts.Build, error) {
+	buildOpts := vsts.BuildsListOptions{Definitions: strconv.Itoa(defID), Branch: "refs/heads/" + branchName, Count: 1}
+	build, err := client.Builds.List(&buildOpts)
+	return build, err
+}
+
+func renderVstsBuilds(builds []vsts.Build, count int, filterBranch string) {
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.FilterHTML)
+	fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", "", "Name", "Branch", "Build", "Finished")
+	for index := 0; index < count; index++ {
+		build := builds[index]
+		name := build.Definition.Name
+		result := build.Result
+		status := build.Status
+		buildNo := build.BuildNumber
+		branch := build.Branch
+
+		// Deal with date formatting for the finish time
+		finish, err := time.Parse(time.RFC3339, builds[index].FinishTime)
+		finishAt := finish.Format(appDateTimeFormat)
+		if err != nil {
+			finishAt = builds[index].FinishTime
+		}
+
+		// Filter on branches
+		matched, _ := regexp.MatchString(".*"+filterBranch+".*", branch)
+		if matched == false {
+			continue
+		}
+
+		if status == "inProgress" {
+			result = appProgress
+		} else if status == "notStarted" {
+			result = appPending
+		} else {
+			if result == "failed" {
+				result = appFailure
+			} else {
+				result = appSuccess
+			}
+		}
+
+		fmt.Fprintf(w, "%s \t%s\t%s\t%s\t%s\n", result, name, branch, buildNo, finishAt)
+	}
+
+	w.Flush()
+}
