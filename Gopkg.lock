@@ -26,6 +26,12 @@
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
+  name = "github.com/jessfraz/tdash"
+  packages = ["jenkins"]
+  revision = "8bddbc342cbcfd232d030528d91afc5226d2c8f3"
+  version = "v0.5.0"
+
+[[projects]]
   name = "github.com/oleiade/reflections"
   packages = ["."]
   revision = "2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496"
@@ -40,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a12b0cc26660a2b8a6a3a6bc1bae08cc4ba8be3295fa5a5d8e82bbd6f6accedc"
+  inputs-digest = "a32638d65a0ad903dbc7c9d1a7813fc8062b189351ac1e68171afb0d486a2699"
   solver-name = "gps-cdcl"
   solver-version = 1

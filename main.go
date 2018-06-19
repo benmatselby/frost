@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/benmatselby/frost/version"
@@ -13,8 +12,12 @@ var (
 	vstsProject string
 	vstsToken   string
 
-	travisToken string
 	travisOwner string
+	travisToken string
+
+	jenkinsURL      string
+	jenkinsUsername string
+	jenkinsPassword string
 )
 
 const (
@@ -28,22 +31,20 @@ const (
 	appUnknown        string = "❓"
 )
 
-func loadEnvironmentVars() error {
+func loadEnvironmentVars() {
 	vstsAccount = os.Getenv("VSTS_ACCOUNT")
 	vstsProject = os.Getenv("VSTS_PROJECT")
 	vstsToken = os.Getenv("VSTS_TOKEN")
 
-	travisToken = os.Getenv("TRAVIS_CI_TOKEN")
 	travisOwner = os.Getenv("TRAVIS_CI_OWNER")
+	travisToken = os.Getenv("TRAVIS_CI_TOKEN")
 
-	if vstsAccount == "" || vstsProject == "" || vstsToken == "" {
-		return fmt.Errorf("The environment variables are not all set")
-	}
-
-	return nil
+	jenkinsURL = os.Getenv("JENKINS_URL")
+	jenkinsUsername = os.Getenv("JENKINS_USERNAME")
+	jenkinsPassword = os.Getenv("JENKINS_PASSWORD")
 }
 
-func usage(withError bool) string {
+func usage() string {
 	usage := `
 ,---.,---.    .---.    .---.  _______
 | .-'| .-.\  / .-. )  ( .-._)|__   __|
@@ -54,34 +55,46 @@ func usage(withError bool) string {
 (__)      (__)(_)
 
 Inspector Jack Frost gets build data out of various build systems into the terminal, where we belong...
-`
-
-	if withError {
-		usage = usage + `
 
 In order for inspector jack frost to investigate, you need to define the following environment variables:
 
 * VSTS_ACCOUNT = %s
 * VSTS_PROJECT = %s
 * VSTS_TOKEN   = %s
+
+* TRAVIS_CI_OWNER = %
+* TRAVIS_CI_TOKEN = %
+
+* JENKINS_URL      = %
+* JENKINS_USERNAME = %
+* JENKINS_PASSWORD = %
 `
-	}
+
 	return usage
 }
 
 func main() {
-	err := loadEnvironmentVars()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, usage(true))
-		os.Exit(2)
-	}
+	loadEnvironmentVars()
 
 	app := cli.NewApp()
 	app.Name = "frost"
 	app.Author = "@benmatselby"
-	app.Usage = usage(false)
+	app.Usage = usage()
 	app.Version = version.GITCOMMIT
 	app.Commands = []cli.Command{
+		{
+			Name:    "jenkins",
+			Aliases: []string{"j"},
+			Usage:   "Build data from Jenkins",
+			Subcommands: []cli.Command{
+				{
+					Name:    "overview",
+					Action:  jenkinsListBuildOverview,
+					Aliases: []string{"o"},
+					Usage:   "Get the overview of builds",
+				},
+			},
+		},
 		{
 			Name:    "travis",
 			Aliases: []string{"t"},
@@ -98,7 +111,8 @@ func main() {
 					},
 				},
 			},
-		}, {
+		},
+		{
 			Name:    "vsts",
 			Aliases: []string{"v"},
 			Usage:   "Build data from the VSTS system",
@@ -109,7 +123,6 @@ func main() {
 					Aliases: []string{"o"},
 					Usage:   "Get the overview of builds",
 					Flags: []cli.Flag{
-						cli.StringFlag{Name: "path", Value: os.Getenv("VSTS_TEAM"), Usage: "Build definition path"},
 						cli.StringFlag{Name: "branch", Value: "master", Usage: "Filter by branch name"},
 					},
 				},

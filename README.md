@@ -8,6 +8,7 @@ _Inspector Jack Frost_
 
 CLI application for getting build information out of various build systems. It currently supports
 
+* [Jenkins](http://jenkins.io)
 * [TravisCI](https://travis-ci.org)
 * Visual Studio Team Services
 
@@ -22,7 +23,7 @@ If you are wanting to build and develop this, you will need the following items 
 
 # Configuration
 
-You will need the following environment variables defining:
+You will need the following environment variables defining depending on which services you want to use:
 
 ```
 $ export VSTS_ACCOUNT=""
@@ -31,6 +32,10 @@ $ export VSTS_TOKEN=""
 
 $ export TRAVIS_CI_OWNER=""
 $ export TRAVIS_CI_TOKEN=""
+
+$ JENKINS_URL=""
+$ JENKINS_USERNAME=""
+$ JENKINS_PASSWORD=""
 ```
 
 # Installation via Git
@@ -55,5 +60,8 @@ $ docker run \
     -eVSTS_TOKEN \
     -eTRAVIS_CI_OWNER \
     -eTRAVIS_CI_TOKEN \
+    -eJENKINS_URL \
+    -eJENKINS_USERNAME \
+    -eJENKINS_PASSWORD \
     benmatselby/frost "$@"
 ```
