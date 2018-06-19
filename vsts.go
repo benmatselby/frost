@@ -16,6 +16,21 @@ import (
 )
 
 func vstsListBuildOverview(c *cli.Context) {
+	if len(vstsAccount) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env VSTS_ACCOUNT not defined")
+		os.Exit(2)
+	}
+
+	if len(vstsProject) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env VSTS_PROJECT not defined")
+		os.Exit(2)
+	}
+
+	if len(vstsToken) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env VSTS_TOKEN not defined")
+		os.Exit(2)
+	}
+
 	filterBranch := c.String("branch")
 	path := c.String("path")
 

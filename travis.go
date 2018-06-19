@@ -12,6 +12,16 @@ import (
 )
 
 func travisListBuildOverview(c *cli.Context) {
+	if len(travisOwner) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env TRAVIS_CI_OWNER not defined")
+		os.Exit(2)
+	}
+
+	if len(travisToken) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env TRAVIS_CI_TOKEN not defined")
+		os.Exit(2)
+	}
+
 	filterBranch := c.String("branch")
 
 	client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, travisToken)

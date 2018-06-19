@@ -10,6 +10,7 @@ import (
 var (
 	vstsAccount string
 	vstsProject string
+	vstsTeam    string
 	vstsToken   string
 
 	travisOwner string
@@ -34,6 +35,7 @@ const (
 func loadEnvironmentVars() {
 	vstsAccount = os.Getenv("VSTS_ACCOUNT")
 	vstsProject = os.Getenv("VSTS_PROJECT")
+	vstsTeam = os.Getenv("VSTS_TEAM")
 	vstsToken = os.Getenv("VSTS_TOKEN")
 
 	travisOwner = os.Getenv("TRAVIS_CI_OWNER")
@@ -60,6 +62,7 @@ In order for inspector jack frost to investigate, you need to define the followi
 
 * VSTS_ACCOUNT = %s
 * VSTS_PROJECT = %s
+* VSTS_TEAM    = %s
 * VSTS_TOKEN   = %s
 
 * TRAVIS_CI_OWNER = %
@@ -123,6 +126,7 @@ func main() {
 					Aliases: []string{"o"},
 					Usage:   "Get the overview of builds",
 					Flags: []cli.Flag{
+						cli.StringFlag{Name: "path", Value: os.Getenv("VSTS_TEAM"), Usage: "Build definition path"},
 						cli.StringFlag{Name: "branch", Value: "master", Usage: "Filter by branch name"},
 					},
 				},
