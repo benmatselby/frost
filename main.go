@@ -19,6 +19,7 @@ var (
 	jenkinsURL      string
 	jenkinsUsername string
 	jenkinsPassword string
+	jenkinsView     string
 )
 
 const (
@@ -44,10 +45,12 @@ func loadEnvironmentVars() {
 	jenkinsURL = os.Getenv("JENKINS_URL")
 	jenkinsUsername = os.Getenv("JENKINS_USERNAME")
 	jenkinsPassword = os.Getenv("JENKINS_PASSWORD")
+	jenkinsView = os.Getenv("JENKINS_VIEW")
 }
 
 func usage() string {
 	usage := `
+
 ,---.,---.    .---.    .---.  _______
 | .-'| .-.\  / .-. )  ( .-._)|__   __|
 |  -.|  -'/  | | |(_)(_) \     )| |
@@ -58,19 +61,21 @@ func usage() string {
 
 Inspector Jack Frost gets build data out of various build systems into the terminal, where we belong...
 
-In order for inspector jack frost to investigate, you need to define the following environment variables:
+In order for inspector jack frost to investigate, you need to define the following environment variables, depending on
+which systems you want to communicate with:
 
-* VSTS_ACCOUNT = %s
-* VSTS_PROJECT = %s
-* VSTS_TEAM    = %s
-* VSTS_TOKEN   = %s
+* VSTS_ACCOUNT
+* VSTS_PROJECT
+* VSTS_TEAM
+* VSTS_TOKEN
 
-* TRAVIS_CI_OWNER = %
-* TRAVIS_CI_TOKEN = %
+* TRAVIS_CI_OWNER
+* TRAVIS_CI_TOKEN
 
-* JENKINS_URL      = %
-* JENKINS_USERNAME = %
-* JENKINS_PASSWORD = %
+* JENKINS_URL
+* JENKINS_USERNAME
+* JENKINS_PASSWORD
+* JENKINS_VIEW
 `
 
 	return usage

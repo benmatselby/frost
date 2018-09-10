@@ -34,14 +34,6 @@
   revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
-  digest = "1:1502e4c6123510d6d9b7b6a421f6115f6f9118e43c37d1b3f1abad22345025df"
-  name = "github.com/jessfraz/tdash"
-  packages = ["jenkins"]
-  pruneopts = "UT"
-  revision = "0ccc6b2ed5b9f6f9f389894abbc10afa257576b6"
-  version = "v0.5.4"
-
-[[projects]]
   digest = "1:1919e36a53e2297eca9d3516ca358dec92257fe0de3361351e09400c91d65d5e"
   name = "github.com/oleiade/reflections"
   packages = ["."]
@@ -63,7 +55,6 @@
   input-imports = [
     "github.com/Ableton/go-travis",
     "github.com/benmatselby/go-vsts/vsts",
-    "github.com/jessfraz/tdash/jenkins",
     "github.com/urfave/cli",
   ]
   solver-name = "gps-cdcl"
