@@ -31,10 +31,10 @@ $ export VSTS_TOKEN=""
 $ export TRAVIS_CI_OWNER=""
 $ export TRAVIS_CI_TOKEN=""
 
-$ JENKINS_URL=""
-$ JENKINS_USERNAME=""
-$ JENKINS_PASSWORD=""
-$ JENKINS_VIEW="" # This is only required, if you want to get an overview of Jenkins from a defined "view"
+$ export JENKINS_URL=""
+$ export JENKINS_USERNAME=""
+$ export JENKINS_PASSWORD=""
+$ export JENKINS_VIEW="" # This is only required, if you want to get an overview of Jenkins from a defined "view"
 ```
 
 ## Installation via Git
