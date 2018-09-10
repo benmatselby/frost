@@ -1,6 +1,7 @@
 # Frost
 
 [![Build Status](https://travis-ci.org/benmatselby/frost.png?branch=master)](https://travis-ci.org/benmatselby/frost)
+[![codecov](https://codecov.io/gh/benmatselby/frost/branch/master/graph/badge.svg)](https://codecov.io/gh/benmatselby/frost)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benmatselby/frost?style=flat-square)](https://goreportcard.com/report/github.com/benmatselby/frost)
 
 _Inspector Jack Frost_
