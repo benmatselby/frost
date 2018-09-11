@@ -11,40 +11,40 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/benmatselby/go-vsts/vsts"
+	"github.com/benmatselby/go-azuredevops/azuredevops"
 	"github.com/urfave/cli"
 )
 
-func vstsListBuildOverview(c *cli.Context) {
-	if len(vstsAccount) <= 0 {
-		fmt.Fprintf(os.Stderr, "os.Env VSTS_ACCOUNT not defined")
+func azureListBuildOverview(c *cli.Context) {
+	if len(azureDevOpsAccount) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env AZURE_DEVOPS_ACCOUNT not defined")
 		os.Exit(2)
 	}
 
-	if len(vstsProject) <= 0 {
-		fmt.Fprintf(os.Stderr, "os.Env VSTS_PROJECT not defined")
+	if len(azureDevOpsProject) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env AZURE_DEVOPS_PROJECT not defined")
 		os.Exit(2)
 	}
 
-	if len(vstsToken) <= 0 {
-		fmt.Fprintf(os.Stderr, "os.Env VSTS_TOKEN not defined")
+	if len(azureDevOpsToken) <= 0 {
+		fmt.Fprintf(os.Stderr, "os.Env AZURE_DEVOPS_TOKEN not defined")
 		os.Exit(2)
 	}
 
 	filterBranch := c.String("branch")
 	path := c.String("path")
 
-	client := vsts.NewClient(vstsAccount, vstsProject, vstsToken)
-	client.UserAgent = "frost/go-vsts"
+	client := azuredevops.NewClient(azureDevOpsAccount, azureDevOpsProject, azureDevOpsToken)
+	client.UserAgent = "frost/go-azuredevops"
 
-	buildDefOpts := vsts.BuildDefinitionsListOptions{Path: "\\" + path}
+	buildDefOpts := azuredevops.BuildDefinitionsListOptions{Path: "\\" + path}
 	definitions, err := client.BuildDefinitions.List(&buildDefOpts)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "unable to get a list of build definitions: %v", err)
 		os.Exit(2)
 	}
 
-	results := make(chan vsts.Build)
+	results := make(chan azuredevops.Build)
 	var wg sync.WaitGroup
 	wg.Add(len(definitions))
 
@@ -54,7 +54,7 @@ func vstsListBuildOverview(c *cli.Context) {
 	}()
 
 	for _, definition := range definitions {
-		go func(definition vsts.BuildDefinition) {
+		go func(definition azuredevops.BuildDefinition) {
 			defer wg.Done()
 
 			for _, branchName := range strings.Split(filterBranch, ",") {
@@ -69,23 +69,23 @@ func vstsListBuildOverview(c *cli.Context) {
 		}(definition)
 	}
 
-	var builds []vsts.Build
+	var builds []azuredevops.Build
 	for result := range results {
 		builds = append(builds, result)
 	}
 
 	sort.Slice(builds, func(i, j int) bool { return builds[i].Definition.Name < builds[j].Definition.Name })
 
-	renderVstsBuilds(builds, len(builds), ".*")
+	renderAzureDevOpsBuilds(builds, len(builds), ".*")
 }
 
-func getBuildsForBranch(client *vsts.Client, defID int, branchName string) ([]vsts.Build, error) {
-	buildOpts := vsts.BuildsListOptions{Definitions: strconv.Itoa(defID), Branch: "refs/heads/" + branchName, Count: 1}
+func getBuildsForBranch(client *azuredevops.Client, defID int, branchName string) ([]azuredevops.Build, error) {
+	buildOpts := azuredevops.BuildsListOptions{Definitions: strconv.Itoa(defID), Branch: "refs/heads/" + branchName, Count: 1}
 	build, err := client.Builds.List(&buildOpts)
 	return build, err
 }
 
-func renderVstsBuilds(builds []vsts.Build, count int, filterBranch string) {
+func renderAzureDevOpsBuilds(builds []azuredevops.Build, count int, filterBranch string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', tabwriter.FilterHTML)
 	fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\n", "", "Name", "Branch", "Build", "Finished")
 	for index := 0; index < count; index++ {
