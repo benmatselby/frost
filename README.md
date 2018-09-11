@@ -10,7 +10,7 @@ CLI application for getting build information out of various build systems. It c
 
 * [Jenkins](http://jenkins.io)
 * [TravisCI](https://travis-ci.org)
-* Visual Studio Team Services
+* [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/)
 
 ## Requirements
 
@@ -24,9 +24,9 @@ If you are wanting to build and develop this, you will need the following items 
 You will need the following environment variables defining depending on which services you want to use:
 
 ```bash
-$ export VSTS_ACCOUNT=""
-$ export VSTS_PROJECT=""
-$ export VSTS_TOKEN=""
+$ export AZURE_DEVOPS_ACCOUNT=""
+$ export AZURE_DEVOPS_PROJECT=""
+$ export AZURE_DEVOPS_TOKEN=""
 
 $ export TRAVIS_CI_OWNER=""
 $ export TRAVIS_CI_TOKEN=""
@@ -34,7 +34,8 @@ $ export TRAVIS_CI_TOKEN=""
 $ export JENKINS_URL=""
 $ export JENKINS_USERNAME=""
 $ export JENKINS_PASSWORD=""
-$ export JENKINS_VIEW="" # This is only required, if you want to get an overview of Jenkins from a defined "view"
+$ export JENKINS_VIEW="" # This is only required, if you want to get an overview of Jenkins from a defined "view".
+                         # If this is not specified, it gets all jobs
 ```
 
 ## Installation via Git
@@ -54,9 +55,9 @@ Other than requiring [docker](http://docker.com) to be installed, there are no o
 $ docker run \
     --rm \
     -t \
-    -eVSTS_ACCOUNT \
-    -eVSTS_PROJECT \
-    -eVSTS_TOKEN \
+    -eAZURE_DEVOPS_ACCOUNT \
+    -eAZURE_DEVOPS_PROJECT \
+    -eAZURE_DEVOPS_TOKEN \
     -eTRAVIS_CI_OWNER \
     -eTRAVIS_CI_TOKEN \
     -eJENKINS_URL \

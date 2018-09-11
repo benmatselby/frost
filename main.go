@@ -8,10 +8,10 @@ import (
 )
 
 var (
-	vstsAccount string
-	vstsProject string
-	vstsTeam    string
-	vstsToken   string
+	azureDevOpsAccount string
+	azureDevOpsProject string
+	azureDevOpsTeam    string
+	azureDevOpsToken   string
 
 	travisOwner string
 	travisToken string
@@ -34,10 +34,10 @@ const (
 )
 
 func loadEnvironmentVars() {
-	vstsAccount = os.Getenv("VSTS_ACCOUNT")
-	vstsProject = os.Getenv("VSTS_PROJECT")
-	vstsTeam = os.Getenv("VSTS_TEAM")
-	vstsToken = os.Getenv("VSTS_TOKEN")
+	azureDevOpsAccount = os.Getenv("AZURE_DEVOPS_ACCOUNT")
+	azureDevOpsProject = os.Getenv("AZURE_DEVOPS_PROJECT")
+	azureDevOpsTeam = os.Getenv("AZURE_DEVOPS_TEAM")
+	azureDevOpsToken = os.Getenv("AZURE_DEVOPS_TOKEN")
 
 	travisOwner = os.Getenv("TRAVIS_CI_OWNER")
 	travisToken = os.Getenv("TRAVIS_CI_TOKEN")
@@ -64,10 +64,10 @@ Inspector Jack Frost gets build data out of various build systems into the termi
 In order for inspector jack frost to investigate, you need to define the following environment variables, depending on
 which systems you want to communicate with:
 
-* VSTS_ACCOUNT
-* VSTS_PROJECT
-* VSTS_TEAM
-* VSTS_TOKEN
+* AZURE_DEVOPS_ACCOUNT
+* AZURE_DEVOPS_PROJECT
+* AZURE_DEVOPS_TEAM
+* AZURE_DEVOPS_TOKEN
 
 * TRAVIS_CI_OWNER
 * TRAVIS_CI_TOKEN
@@ -121,17 +121,17 @@ func main() {
 			},
 		},
 		{
-			Name:    "vsts",
-			Aliases: []string{"v"},
-			Usage:   "Build data from the VSTS system",
+			Name:    "azure",
+			Aliases: []string{"a"},
+			Usage:   "Build data from Azure DevOps",
 			Subcommands: []cli.Command{
 				{
 					Name:    "overview",
-					Action:  vstsListBuildOverview,
+					Action:  azureListBuildOverview,
 					Aliases: []string{"o"},
 					Usage:   "Get the overview of builds",
 					Flags: []cli.Flag{
-						cli.StringFlag{Name: "path", Value: os.Getenv("VSTS_TEAM"), Usage: "Build definition path"},
+						cli.StringFlag{Name: "path", Value: os.Getenv("AZURE_DEVOPS_TEAM"), Usage: "Build definition path"},
 						cli.StringFlag{Name: "branch", Value: "master", Usage: "Filter by branch name"},
 					},
 				},
