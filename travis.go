@@ -25,7 +25,7 @@ func travisListBuildOverview(c *cli.Context) {
 	filterBranch := c.String("branch")
 
 	client := travis.NewClient(travis.TRAVIS_API_DEFAULT_URL, travisToken)
-	opt := &travis.RepositoryListOptions{OwnerName: travisOwner, Active: true}
+	opt := &travis.RepositoryListOptions{Member: travisOwner, Active: true}
 	repos, _, err := client.Repositories.Find(opt)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "unable to get the overview: %v", err)
