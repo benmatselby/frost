@@ -6,11 +6,12 @@
 
 _Inspector Jack Frost_
 
-CLI application for getting build information out of various build systems. It currently supports
+CLI application for getting certain kinds of data out of various build and work management tools. It currently supports
 
-* [Jenkins](http://jenkins.io)
-* [TravisCI](https://travis-ci.org)
-* [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/)
+* [Jenkins](http://jenkins.io) - Build information
+* [TravisCI](https://travis-ci.org) - Build information
+* [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
+* [GitHub](https://github.com)- Pull Request information
 
 ## Requirements
 
@@ -24,27 +25,43 @@ If you are wanting to build and develop this, you will need the following items 
 You will need the following environment variables defining depending on which services you want to use:
 
 ```bash
-$ export AZURE_DEVOPS_ACCOUNT=""
-$ export AZURE_DEVOPS_PROJECT=""
-$ export AZURE_DEVOPS_TOKEN=""
+export AZURE_DEVOPS_ACCOUNT=""
+export AZURE_DEVOPS_PROJECT=""
+export AZURE_DEVOPS_TOKEN=""
 
-$ export TRAVIS_CI_OWNER=""
-$ export TRAVIS_CI_TOKEN=""
+export TRAVIS_CI_OWNER=""
+export TRAVIS_CI_TOKEN=""
 
-$ export JENKINS_URL=""
-$ export JENKINS_USERNAME=""
-$ export JENKINS_PASSWORD=""
-$ export JENKINS_VIEW="" # This is only required, if you want to get an overview of Jenkins from a defined "view".
-                         # If this is not specified, it gets all jobs
+export GITHUB_ORG=""
+export GITHUB_OWNER=""
+export GITHUB_TOKEN=""
+
+export JENKINS_URL=""
+export JENKINS_USERNAME=""
+export JENKINS_PASSWORD=""
+# This is only required, if you want to get an overview of Jenkins from a defined "view".
+# If this is not specified, it gets all jobs
+export JENKINS_VIEW=""
+```
+
+You can also define ~/.frost/config.yml which has various settings.
+
+### Limiting the repos to show Pull Requests for
+
+```yml
+github:
+  pull_request_repos:
+  - my-org/my-repo
+  - benmatselby/*
 ```
 
 ## Installation via Git
 
 ```bash
-$ git clone git@github.com:benmatselby/frost.git
-$ cd frost
-$ make all
-$ ./frost --help
+git clone git@github.com:benmatselby/frost.git
+cd frost
+make all
+./frost --help
 ```
 
 ## Installation via Docker
@@ -58,6 +75,9 @@ $ docker run \
     -eAZURE_DEVOPS_ACCOUNT \
     -eAZURE_DEVOPS_PROJECT \
     -eAZURE_DEVOPS_TOKEN \
+    -eGITHUB_ORG \
+    -eGITHUB_OWNER \
+    -eGITHUB_TOKEN \
     -eTRAVIS_CI_OWNER \
     -eTRAVIS_CI_TOKEN \
     -eJENKINS_URL \

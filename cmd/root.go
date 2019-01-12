@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/benmatselby/frost/cmd/ado"
+	"github.com/benmatselby/frost/cmd/github"
 	"github.com/benmatselby/frost/cmd/jenkins"
 	"github.com/benmatselby/frost/cmd/travis"
 	"github.com/benmatselby/frost/version"
@@ -50,6 +51,7 @@ func NewRootCommand() *cobra.Command {
 		ado.NewAdoCommand(),
 		jenkins.NewJenkinsCommand(),
 		travis.NewTravisCommand(),
+		github.NewGitHubCommand(),
 	)
 	return cmd
 }
@@ -76,7 +78,8 @@ func initConfig() {
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Println("Using config file:", viper.ConfigFileUsed())
+	err := viper.ReadInConfig()
+	if fmt.Sprintf("%T", err) == "ConfigParseError" {
+		fmt.Fprintf(os.Stderr, "Failed to load config: %s\n", err)
 	}
 }
