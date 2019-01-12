@@ -1,4 +1,4 @@
-package jenkins_test
+package client_test
 
 import (
 	"fmt"
@@ -7,7 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/benmatselby/frost/jenkins"
+	"github.com/benmatselby/frost/cmd/jenkins/client"
+	jenkins "github.com/benmatselby/frost/cmd/jenkins/client"
 )
 
 const (
@@ -66,7 +67,7 @@ const (
 )
 
 // Pulled from https://github.com/google/go-github/blob/master/github/github_test.go
-func setup() (client *jenkins.Client, mux *http.ServeMux, serverURL string, teardown func()) {
+func setup() (client *client.Client, mux *http.ServeMux, serverURL string, teardown func()) {
 	// mux is the HTTP request multiplexer used with the test server.
 	mux = http.NewServeMux()
 
@@ -86,6 +87,7 @@ func setup() (client *jenkins.Client, mux *http.ServeMux, serverURL string, tear
 
 	// server is a test HTTP server used to provide mock API responses.
 	server := httptest.NewServer(apiHandler)
+
 	client = jenkins.New(server.URL+"/"+baseURLPath, "USERNAME", "TOKEN")
 
 	return client, mux, server.URL, server.Close
