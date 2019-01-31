@@ -23,7 +23,7 @@ If you are wanting to build and develop this, you will need the following items 
 
 You will need the following environment variables defining depending on which services you want to use:
 
-```bash
+```shell
 export AZURE_DEVOPS_ACCOUNT=""
 export AZURE_DEVOPS_PROJECT=""
 export AZURE_DEVOPS_TOKEN=""
@@ -56,18 +56,28 @@ github:
 
 ## Installation via Git
 
-```bash
+```shell
 git clone git@github.com:benmatselby/frost.git
 cd frost
 make all
 ./frost --help
 ```
 
+## Bash completion
+
+If you would like bash completion support, then run:
+
+```shell
+frost completion
+```
+
+This will generate a bash completion script in `/tmp/frost.sh`. You simply need to move this into your `bash_completion.d` folder. On the Mac, this is likely to be `/usr/local/etc/bash_completion.d/`.
+
 ## Installation via Docker
 
 Other than requiring [docker](http://docker.com) to be installed, there are no other requirements to run the application this way
 
-```bash
+```shell
 $ docker run \
     --rm \
     -t \
