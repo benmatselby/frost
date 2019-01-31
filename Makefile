@@ -55,7 +55,7 @@ test: ## Run the unit tests
 
 .PHONY: test-cov
 test-cov: test ## Run the unit tests with coverage
-	go tool cover -html=profile.out
+	go tool cover -html=coverage.out
 
 .PHONY: all
 all: clean install lint vet build test ## Run everything
