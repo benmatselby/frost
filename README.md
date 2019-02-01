@@ -45,14 +45,16 @@ export JENKINS_VIEW=""
 
 You can also define ~/.frost/config.yml which has various settings.
 
-### Limiting the repos to show Pull Requests for
+### Limiting the repos to show Pull Requests/Issues for
 
 ```yml
 github:
-  pull_request_repos:
+  repos:
   - my-org/my-repo
   - benmatselby/*
 ```
+
+You can either specify a given repo slug, such as `my-org/my-repo` or by using the `*` wildcard to mean all repos.
 
 ## Installation via Git
 
