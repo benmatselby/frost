@@ -11,7 +11,7 @@ CLI application for getting certain kinds of data out of various build and work 
 * [Jenkins](http://jenkins.io) - Build information
 * [TravisCI](https://travis-ci.org) - Build information
 * [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
-* [GitHub](https://github.com)- Pull Request information
+* [GitHub](https://github.com)- Pull Request/Issue information
 
 ```output
 CLI application for retrieving data from the 🌍
@@ -86,16 +86,6 @@ make all
 ./frost --help
 ```
 
-## Bash completion
-
-If you would like bash completion support, then run:
-
-```shell
-frost completion
-```
-
-This will generate a bash completion script in `/tmp/frost.sh`. You simply need to move this into your `bash_completion.d` folder. On the Mac, this is likely to be `/usr/local/etc/bash_completion.d/`.
-
 ## Installation via Docker
 
 Other than requiring [docker](http://docker.com) to be installed, there are no other requirements to run the application this way
@@ -117,3 +107,13 @@ $ docker run \
     -eJENKINS_PASSWORD \
     benmatselby/frost "$@"
 ```
+
+## Bash completion
+
+If you would like bash completion support, then run:
+
+```shell
+frost completion
+```
+
+This will generate a bash completion script in `/tmp/frost.sh`. You simply need to move this into your `bash_completion.d` folder. On the Mac, this is likely to be `/usr/local/etc/bash_completion.d/`.
