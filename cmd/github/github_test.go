@@ -5,8 +5,21 @@ import (
 	"testing"
 
 	"github.com/benmatselby/frost/cmd/github"
+	"github.com/benmatselby/frost/test"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
+
+func TestNewGitHubCommand(t *testing.T) {
+	cmd := github.NewGitHubCommand()
+
+	expected := &cobra.Command{
+		Use:   "github",
+		Short: "GitHub related commands",
+	}
+
+	test.Command(t, cmd, expected)
+}
 
 func TestShowRepoRules(t *testing.T) {
 	tt := []struct {

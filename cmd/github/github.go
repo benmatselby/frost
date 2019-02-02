@@ -7,21 +7,14 @@ import (
 
 	"github.com/google/go-github/github"
 	"github.com/spf13/viper"
+	"golang.org/x/oauth2"
 
 	"github.com/spf13/cobra"
-	"golang.org/x/oauth2"
 )
 
 // NewGitHubCommand will add a `github` command which will add sub commands
 func NewGitHubCommand() *cobra.Command {
-	githubToken := viper.GetString("GITHUB_TOKEN")
-	ctx := context.Background()
-
-	sts := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: githubToken},
-	)
-	httpClient := oauth2.NewClient(ctx, sts)
-	client := github.NewClient(httpClient)
+	ctx, client := NewClient()
 
 	cmd := &cobra.Command{
 		Use:   "github",
@@ -34,6 +27,20 @@ func NewGitHubCommand() *cobra.Command {
 	)
 
 	return cmd
+}
+
+// NewClient returns a github client
+func NewClient() (context.Context, *github.Client) {
+	githubToken := viper.GetString("GITHUB_TOKEN")
+	ctx := context.Background()
+
+	sts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: githubToken},
+	)
+	httpClient := oauth2.NewClient(ctx, sts)
+	client := github.NewClient(httpClient)
+
+	return ctx, client
 }
 
 // GetRepos will find all repos the github owner can "see"
