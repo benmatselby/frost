@@ -3,7 +3,6 @@ package github
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/google/go-github/github"
 	"github.com/spf13/viper"
@@ -89,34 +88,47 @@ func GetRepos(ctx context.Context, client *github.Client, githubOwner string) ([
 
 // ShowRepo is going to determine if we care enough to show the detail
 func ShowRepo(org, name string) bool {
-	watchRepos := viper.GetStringSlice("github.repos")
+	repos := getConfigWatchRepos()
 
-	if len(watchRepos) == 0 {
+	if len(repos) == 0 {
 		return true
 	}
 
-	show := false
-	for _, i := range watchRepos {
-		s := strings.Split(i, "/")
+	slug := fmt.Sprintf("%s/%s", org, name)
 
-		// If we want to watch everything for a given org
-		if s[1] == "*" && org == s[0] {
-			show = true
-			break
-		}
-
-		// If we want to watch everything for a given repo (including forks)
-		if s[0] == "*" && name == s[1] {
-			show = true
-			break
-		}
-
-		// Otherwise we want an exact match
-		if i == fmt.Sprintf("%s/%s", org, name) {
-			show = true
-			break
-		}
+	if repos["!"+slug] == true {
+		return false
 	}
 
-	return show
+	if repos[slug] == true {
+		return true
+	}
+
+	if repos[org+"/*"] == true {
+		return true
+	}
+
+	if repos["*/"+name] == true {
+		return true
+	}
+
+	return false
+}
+
+var configWatchRepos = map[string]bool{}
+var configWatchRepoSet = false
+
+func getConfigWatchRepos() map[string]bool {
+	watchRepos := viper.GetStringSlice("github.repos")
+
+	if configWatchRepoSet == true {
+		return configWatchRepos
+	}
+
+	for _, i := range watchRepos {
+		configWatchRepos[i] = true
+	}
+
+	configWatchRepoSet = true
+	return configWatchRepos
 }
