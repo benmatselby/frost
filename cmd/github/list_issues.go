@@ -82,7 +82,7 @@ func DisplayIssues(ctx context.Context, client *github.Client, w io.Writer) erro
 	})
 
 	tr := tabwriter.NewWriter(w, 0, 1, 1, ' ', 0)
-	fmt.Fprintf(tr, "%s\t%s\n", "Repo", "Title.")
+	fmt.Fprintf(tr, "%s\t%s\n", "Repo", "Title")
 	for _, row := range rows {
 		fmt.Fprintf(tr, "%s\t%s\n", row[0], row[1])
 	}
