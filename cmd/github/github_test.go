@@ -34,6 +34,7 @@ func TestShowRepoRules(t *testing.T) {
 		{name: "a repo not defined", org: "google", repoName: "mail", useConfig: true, expected: false},
 		{name: "a fork of golang", org: "bobdylan", repoName: "golang", useConfig: true, expected: true},
 		{name: "any repo as config not used", org: "microsoft", repoName: "office", useConfig: false, expected: true},
+		{name: "any repo as config not used", org: "microsoft", repoName: "powerpoint", useConfig: false, expected: false},
 	}
 
 	for _, tc := range tt {
@@ -43,6 +44,7 @@ func TestShowRepoRules(t *testing.T) {
 				viper.Set("github.repos", []string{
 					"apple/mac",
 					"microsoft/*",
+					"!microsoft/powerpoint",
 					"*/golang",
 				})
 			} else {

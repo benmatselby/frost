@@ -8,10 +8,10 @@ _Inspector Jack Frost_
 
 CLI application for getting certain kinds of data out of various build and work management tools. It currently supports
 
-* [Jenkins](http://jenkins.io) - Build information
-* [TravisCI](https://travis-ci.org) - Build information
-* [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
-* [GitHub](https://github.com)- Pull Request/Issue information
+- [Jenkins](http://jenkins.io) - Build information
+- [TravisCI](https://travis-ci.org) - Build information
+- [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
+- [GitHub](https://github.com)- Pull Request/Issue information
 
 ```output
 CLI application for retrieving data from the 🌍
@@ -38,7 +38,7 @@ Use "frost [command] --help" for more information about a command.
 
 If you are wanting to build and develop this, you will need the following items installed. If, however, you just want to run the application I recommend using the docker container (See below)
 
-* Go version 1.11+
+- Go version 1.11+
 
 ## Configuration
 
@@ -66,16 +66,22 @@ export JENKINS_VIEW=""
 
 You can also define ~/.frost/config.yml which has various settings.
 
-### Limiting the repos to show Pull Requests/Issues for
+### Repo configuration for Pull Request/Issues
+
+If you belong to a large organisation, or have a lot of repos, you may want to limit what to display. This can be done via the configuration file.
 
 ```yml
 github:
   repos:
   - my-org/my-repo
   - benmatselby/*
+  - "!benmatselby/sublime-jenkins-dashboard"
 ```
 
-You can either specify a given repo slug, such as `my-org/my-repo` or by using the `*` wildcard to mean all repos.
+This gives the following configuration:
+
+- Show `my-org/my-repo` but nothing else from `my-org`.
+- Show everything from `benmatselby` except `benmatselby/sublime-jenkins-dashboard`.
 
 ## Installation via Git
 
