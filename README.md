@@ -13,6 +13,27 @@ CLI application for getting certain kinds of data out of various build and work 
 * [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
 * [GitHub](https://github.com)- Pull Request information
 
+```output
+CLI application for retrieving data from the 🌍
+
+Usage:
+  frost [command]
+
+Available Commands:
+  ado         Azure DevOps related commands
+  github      GitHub related commands
+  help        Help about any command
+  jenkins     Jenkins related commands
+  travis      TravisCI related commands
+  version     Show the version information
+
+Flags:
+      --config string   config file (default is $HOME/.frost/config.yaml)
+  -h, --help            help for frost
+
+Use "frost [command] --help" for more information about a command.
+```
+
 ## Requirements
 
 If you are wanting to build and develop this, you will need the following items installed. If, however, you just want to run the application I recommend using the docker container (See below)

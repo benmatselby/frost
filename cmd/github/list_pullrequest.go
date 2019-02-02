@@ -14,7 +14,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-// NewPullRequestCommand will add a `github pullrequest list` command
+// NewPullRequestCommand will add a `github list-pr` command
 func NewPullRequestCommand(ctx context.Context, client *github.Client) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "list-pr",
