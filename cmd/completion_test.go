@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/benmatselby/frost/cmd"
+	"github.com/benmatselby/frost/test"
 	"github.com/spf13/cobra"
 )
 
@@ -14,14 +15,10 @@ func TestNewCompletionCommand(t *testing.T) {
 
 	cmd := cmd.NewCompletionCommand(root)
 
-	use := "completion"
-	short := "Generates the bash completion script: /tmp/frost.sh"
-
-	if cmd.Use != use {
-		t.Fatalf("expected use: %s; got %s", use, cmd.Use)
+	expected := &cobra.Command{
+		Use:   "completion",
+		Short: "Generates the bash completion script: /tmp/frost.sh",
 	}
 
-	if cmd.Short != short {
-		t.Fatalf("expected use: %s; got %s", short, cmd.Short)
-	}
+	test.Command(t, cmd, expected)
 }
