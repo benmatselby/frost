@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"sort"
-	"strings"
 	"sync"
 	"text/tabwriter"
 
@@ -32,43 +31,9 @@ func NewPullRequestCommand(ctx context.Context, client *github.Client) *cobra.Co
 func List(ctx context.Context, client *github.Client, w io.Writer) error {
 	githubOwner := viper.GetString("GITHUB_OWNER")
 
-	orgs, _, err := client.Organizations.List(context.Background(), githubOwner, nil)
+	allRepos, err := GetRepos(ctx, client, githubOwner)
 	if err != nil {
 		return err
-	}
-
-	var allRepos [][]string
-	for _, org := range orgs {
-		opt := &github.RepositoryListByOrgOptions{
-			ListOptions: github.ListOptions{PerPage: 100},
-		}
-		repos, _, err := client.Repositories.ListByOrg(ctx, org.GetLogin(), opt)
-		if err != nil {
-			return err
-		}
-
-		for _, repo := range repos {
-			if !showRepoPr(org.GetLogin(), repo.GetName()) {
-				continue
-			}
-			allRepos = append(allRepos, []string{org.GetLogin(), repo.GetName()})
-		}
-	}
-
-	opt := &github.RepositoryListOptions{}
-	repos, _, err := client.Repositories.List(ctx, githubOwner, opt)
-	if err != nil {
-		return err
-	}
-
-	for _, repo := range repos {
-		if repo.GetFork() {
-			continue
-		}
-		if !showRepoPr(githubOwner, repo.GetName()) {
-			continue
-		}
-		allRepos = append(allRepos, []string{githubOwner, repo.GetName()})
 	}
 
 	rows := [][]string{}
@@ -108,7 +73,7 @@ func List(ctx context.Context, client *github.Client, w io.Writer) error {
 		return rows[i][0] < rows[j][0]
 	})
 
-	tr := tabwriter.NewWriter(w, 0, 0, 1, ' ', tabwriter.FilterHTML)
+	tr := tabwriter.NewWriter(w, 0, 1, 1, ' ', 0)
 	fmt.Fprintf(tr, "%s\t%s\n", "Repo", "Title.")
 	for _, row := range rows {
 		fmt.Fprintf(tr, "%s\t%s\n", row[0], row[1])
@@ -116,38 +81,4 @@ func List(ctx context.Context, client *github.Client, w io.Writer) error {
 	tr.Flush()
 
 	return nil
-}
-
-// showRepoPr is going to determine if we care enough to show the detail
-func showRepoPr(org, name string) bool {
-	watchRepos := viper.GetStringSlice("github.pull_request_repos")
-
-	if len(watchRepos) == 0 {
-		return true
-	}
-
-	show := false
-	for _, i := range watchRepos {
-		s := strings.Split(i, "/")
-
-		// If we want to watch everything for a given org
-		if s[1] == "*" && org == s[0] {
-			show = true
-			break
-		}
-
-		// If we want to watch everything for a given repo (including forks)
-		if s[0] == "*" && name == s[1] {
-			show = true
-			break
-		}
-
-		// Otherwise we want an exact match
-		if i == fmt.Sprintf("%s/%s", org, name) {
-			show = true
-			break
-		}
-	}
-
-	return show
 }
