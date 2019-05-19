@@ -60,23 +60,6 @@ export JENKINS_VIEW=""
 
 You can also define ~/.frost/config.yml which has various settings.
 
-### Repo configuration for Pull Request/Issues
-
-If you belong to a large organisation, or have a lot of repos, you may want to limit what to display. This can be done via the configuration file.
-
-```yml
-github:
-  repos:
-  - my-org/my-repo
-  - benmatselby/*
-  - "!benmatselby/sublime-jenkins-dashboard"
-```
-
-This gives the following configuration:
-
-- Show `my-org/my-repo` but nothing else from `my-org`.
-- Show everything from `benmatselby` except `benmatselby/sublime-jenkins-dashboard`.
-
 ## Installation via Git
 
 ```shell
