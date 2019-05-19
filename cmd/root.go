@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/benmatselby/frost/cmd/ado"
-	"github.com/benmatselby/frost/cmd/github"
 	"github.com/benmatselby/frost/cmd/jenkins"
 	"github.com/benmatselby/frost/cmd/travis"
 	"github.com/benmatselby/frost/version"
@@ -49,7 +48,6 @@ func NewRootCommand() *cobra.Command {
 		ado.NewAdoCommand(),
 		jenkins.NewJenkinsCommand(),
 		travis.NewTravisCommand(),
-		github.NewGitHubCommand(),
 	)
 	return cmd
 }

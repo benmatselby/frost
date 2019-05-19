@@ -11,7 +11,6 @@ CLI application for getting certain kinds of data out of various build and work 
 - [Jenkins](http://jenkins.io) - Build information
 - [TravisCI](https://travis-ci.org) - Build information
 - [Azure DevOps](https://azure.microsoft.com/en-us/solutions/devops/) - Build information
-- [GitHub](https://github.com)- Pull Request/Issue information
 
 ```output
 CLI application for retrieving data from the 🌍
@@ -21,7 +20,6 @@ Usage:
 
 Available Commands:
   ado         Azure DevOps related commands
-  github      GitHub related commands
   help        Help about any command
   jenkins     Jenkins related commands
   travis      TravisCI related commands
@@ -51,10 +49,6 @@ export AZURE_DEVOPS_TOKEN=""
 
 export TRAVIS_CI_OWNER=""
 export TRAVIS_CI_TOKEN=""
-
-export GITHUB_ORG=""
-export GITHUB_OWNER=""
-export GITHUB_TOKEN=""
 
 export JENKINS_URL=""
 export JENKINS_USERNAME=""
@@ -103,9 +97,6 @@ $ docker run \
     -eAZURE_DEVOPS_ACCOUNT \
     -eAZURE_DEVOPS_PROJECT \
     -eAZURE_DEVOPS_TOKEN \
-    -eGITHUB_ORG \
-    -eGITHUB_OWNER \
-    -eGITHUB_TOKEN \
     -eTRAVIS_CI_OWNER \
     -eTRAVIS_CI_TOKEN \
     -eJENKINS_URL \
