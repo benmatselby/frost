@@ -26,7 +26,7 @@ Available Commands:
   version     Show the version information
 
 Flags:
-      --config string   config file (default is $HOME/.frost/config.yaml)
+      --config string   config file (default is $HOME/.benmatselby/frost.yaml)
   -h, --help            help for frost
 
 Use "frost [command] --help" for more information about a command.
@@ -58,7 +58,7 @@ export JENKINS_PASSWORD=""
 export JENKINS_VIEW=""
 ```
 
-You can also define ~/.frost/config.yml which has various settings.
+You can also define ~/.benmatselby/frost.yml which has various settings.
 
 ## Installation via Git
 

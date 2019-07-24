@@ -40,7 +40,7 @@ func NewRootCommand() *cobra.Command {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	cmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.frost/config.yaml)")
+	cmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.benmatselby/frost.yaml)")
 
 	cmd.AddCommand(
 		NewVersionCommand(),
@@ -66,9 +66,9 @@ func initConfig() {
 		}
 
 		// Search config in home directory with name ".frost" (without extension).
-		path := strings.Join([]string{home, ".frost"}, "/")
+		path := strings.Join([]string{home, ".benmatselby"}, "/")
 		viper.AddConfigPath(path)
-		viper.SetConfigName("config")
+		viper.SetConfigName("frost")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
