@@ -1,2 +1,5 @@
 frost
 coverage.out
+
+# Sonar
+.scannerwork/

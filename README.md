@@ -1,7 +1,6 @@
 # Frost
 
-[![Build Status](https://travis-ci.org/benmatselby/frost.png?branch=master)](https://travis-ci.org/benmatselby/frost)
-[![codecov](https://codecov.io/gh/benmatselby/frost/branch/master/graph/badge.svg)](https://codecov.io/gh/benmatselby/frost)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=frost&metric=alert_status)](https://sonarcloud.io/dashboard?id=frost)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benmatselby/frost?style=flat-square)](https://goreportcard.com/report/github.com/benmatselby/frost)
 
 _Inspector Jack Frost_
@@ -36,7 +35,7 @@ Use "frost [command] --help" for more information about a command.
 
 If you are wanting to build and develop this, you will need the following items installed. If, however, you just want to run the application I recommend using the docker container (See below)
 
-- Go version 1.11+
+- Go version 1.12+
 
 ## Configuration
 
