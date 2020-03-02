@@ -1,5 +1,7 @@
 module github.com/benmatselby/frost
 
+go 1.14
+
 require (
 	github.com/Ableton/go-travis v0.0.0-20190118170808-1d2b2c3b9155
 	github.com/BurntSushi/toml v0.3.1 // indirect
