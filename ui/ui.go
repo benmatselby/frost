@@ -14,7 +14,7 @@ const (
 	// AppProgress if something is in progress
 	AppProgress string = "🏗"
 	// AppStale when something is out of date and has entered the black hole
-	AppStale string = "🕳"
+	AppStale string = "🍞"
 	// AppUnknown when the world is just too darn crazy and we have no idea what is happening
 	AppUnknown string = "❓"
 )
