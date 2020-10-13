@@ -1,6 +1,6 @@
 # Frost
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=frost&metric=alert_status)](https://sonarcloud.io/dashboard?id=frost)
+![Go](https://github.com/benmatselby/frost/workflows/Go/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/benmatselby/frost?style=flat-square)](https://goreportcard.com/report/github.com/benmatselby/frost)
 
 _Inspector Jack Frost_
