@@ -1,4 +1,4 @@
-FROM golang:1.16.4-alpine as builder
+FROM golang:1.16.5-alpine as builder
 LABEL maintainer="Ben Selby <benmatselby@gmail.com>"
 
 ENV APPNAME frost
