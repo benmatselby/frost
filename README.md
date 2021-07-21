@@ -73,6 +73,7 @@ make all
 Other than requiring [docker](http://docker.com) to be installed, there are no other requirements to run the application this way
 
 ```shell
+$ docker build -t benmatselby/frost .
 $ docker run \
     --rm \
     -t \
