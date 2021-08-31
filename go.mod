@@ -1,6 +1,6 @@
 module github.com/benmatselby/frost
 
-go 1.14
+go 1.17
 
 require (
 	github.com/Ableton/go-travis v0.0.0-20190118170808-1d2b2c3b9155
@@ -20,4 +20,13 @@ require (
 	golang.org/x/sys v0.0.0-20201013132646-2da7054afaeb // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
+)
+
+require (
+	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/subosito/gotenv v1.2.0 // indirect
+	golang.org/x/text v0.3.3 // indirect
 )
