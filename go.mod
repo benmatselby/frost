@@ -16,8 +16,8 @@ require (
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/cobra v1.3.0
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
-	github.com/spf13/viper v1.10.0
-	golang.org/x/sys v0.0.0-20211205182925-97ca703d548d // indirect
+	github.com/spf13/viper v1.10.1
+	golang.org/x/sys v0.0.0-20211210111614-af8b64212486 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
