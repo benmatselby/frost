@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Ableton/go-travis v0.0.0-20190118170808-1d2b2c3b9155
-	github.com/benmatselby/go-azuredevops v0.1.0
+	github.com/benmatselby/go-azuredevops v0.4.0
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/magiconair/properties v1.8.4 // indirect
